@@ -1,5 +1,3 @@
-package tp3;
-
 public class Configuration {
 	
 	protected int m;

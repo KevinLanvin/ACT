@@ -1,0 +1,64 @@
+Yann Moyart
+Lanvin Kevin
+
+
+Diviser pour Régner : la ligne des toits
+
+1/ 
+	(2;0)(2;5)(4;4)(4;7)(5;7)(5;0) n'est pas une ligne de toits.
+	(2;0)(2;5)(4;5)(4;7)(5;7)(5;0) est une ligne de toits.
+	(2;0)(2;5)(4;5)(4;7)(5;7)(6;7)(5;0) n'est pas une ligne de toits.
+	(2;0)(2;5)(4;5)(4;8)(4;7)(5;7)(5;0) est une ligne de toits avec une antenne (pas de diagonale).
+
+2/ Pour un couple (x,y) à une position n, il faut que x(n) = x(n+1) OU y(n) = y(n+1)
+
+3/ On peut prendre en compte qu'un seul point sur deux, pour creer la ligne des toits, ainsi la représentation de la polyligne devient : (1;11)(3;13)(9;0)(12;7)(16;3)(19;18)(22;3)(25;0)
+
+
+4/ La complexité dépend de la taille du tableau c'est a dire du nombre de pixel "m" et du nombre d'immeuble "n" on a donc une compléxité de n*m. Le nombre de pixels est une donnée trop importante pour la compléxité de l'algorithme.
+
+
+5/ 
+
+n : nombre d'immeubles 
+l : liste de n triplet (g,h,d) -> avec les h triés par ordre croissant
+
+
+Pour i allant de 0 à n
+	on prend le triplet (g,h,d) à la case l[i]
+	on supprime de la ligne de toits les points dont l'abscisse est comprise entre g et d
+	on conserve la hauteur du dernier point supprimé dans la variable x (0 par defaut).
+	on insère les points (g,h) et (d,x) dans la liste.
+
+complexité de n
+
+6/ Fusion de ligne
+
+l1 : ligne de toit 1
+l2 : ligne de toit 2
+
+
+On créer l3 une 3eme ligne de toit et on met tous les points respectant l'ordre des x.
+pour i allant de 1 au nombre de points dans l3
+		si h[i-1]>h[i]>h[i+1]
+	on creer un nouveau point e=(x[i+1],h[i])
+	on ajoute e a la place du point en position i
+	on supprime le point en i+1
+
+Complexité : O(n)
+
+
+
+7/
+
+On coupe en deux les lignes de toit en l1 et l2
+	si la liste contient plusieurs éléments
+		On fait un appel récursif sur l1 et l2
+	Sinon
+		 on génère une liste (g,h) et (d,0) du rectangle contenu dans la liste
+
+On fusionne ensuite l1 et l2 comme dans la question 4.
+
+
+
+Complexité : O(nlog(n))
