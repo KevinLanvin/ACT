@@ -31,6 +31,9 @@ Sinon :
 
 5/
 Sur une tablette de 127x127 , il n'est pas possible de gagner en 127 coups exactement.
+Nous avons testé pour toutes les valeurs de i et j entre 1 et 64.
+Comme expliqué plus loin, ce problème contient de nombreuses symétries.
+Tester seulement un quart des configurations possibles est donc suffisant (1/8eme aurait dailleurs suffi)
 
 
 6/ 
@@ -56,7 +59,3 @@ Toutes les configurations sont donc identiques à la première, car elles n'ont 
 8/ 
 Pour en tirer parti, il suffit d'appliquer ces transformations à la configuration actuellement testée, et de stocker les 8 résultats pour chaque configuration calculée.
 Cela permet de réduire le temps de calcul. Dans le meilleur des cas, on le divise par 8.
-Cependant, il pourrait également être judicieux de ne pas stocker les 8 résultats, mais plutôt de garder une seule de ces configurations. Quand on tombera sur une configuration similaire, on pourra alors récupérer la valeur de la première configuration sans recalculer.
-Cette méthode permet toujours de ne pas calculer toutes les configurations, mais elle permet également de diviser par 8 le nombre de cases du tableau permettant de stocker les résultats.
-Pour que cela fonctionne, il faut convenir d'un formalisme qui déterminera laquelle des 8 configurations on souhaite conserver.
-Par exemple, on peut choisir de ne garder que celle qui a le plus petit i, puis le plus petit j en cas de litige.

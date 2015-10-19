@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EvaluationPosition {
 
@@ -10,12 +11,18 @@ public class EvaluationPosition {
 	}
 
 	
+	public Configuration play(Configuration c){
+		
+		return c;
+	}
+	
+	
 	public int evaluationDynamique(Configuration c) {
 		int result = this.valueFor(c);
 		if (result == 0) {
 			result = this.calculateValueOf(c);
 			this.storeResultBis(result, c);
-		} 
+		}
 		return result;
 	}
 
@@ -51,21 +58,30 @@ public class EvaluationPosition {
 		return values[c.m][c.n][c.i][c.j];
 	}
 
-	private void storeResultBis(int r, Configuration c){
-		this.storeResult(r,this.getMinimalConfigFromSimilarTo(c));
+	private void storeResultBis(int r, Configuration c) {
+		for (Configuration c1 : this.getConfigsSimilarTo(c))
+			this.storeResult(r, c1);
 	}
-	
-	private Configuration getMinimalConfigFromSimilarTo(Configuration c){
-		List<Configuration> list = new ArrayList<Configuration>();
-		//Calculer ici les configs et renvoyer celle avec le plus petit i, puis le plus petit j
-		return c;
+
+	private Set<Configuration> getConfigsSimilarTo(Configuration c) {
+		Set<Configuration> list = new HashSet<Configuration>();
+
+		list.add(c);
+		list.add(new Configuration(c.m, c.n, c.i, c.n - c.j + 1));
+		list.add(new Configuration(c.m, c.n, c.m - c.i + 1, c.j));
+		list.add(new Configuration(c.m, c.n, c.m - c.i + 1, c.n - c.j + 1));
+		list.add(new Configuration(c.n, c.m, c.j, c.i));
+		list.add(new Configuration(c.n, c.m, c.n - c.j + 1, c.i));
+		list.add(new Configuration(c.n, c.m, c.j, c.m - c.i + 1));
+		list.add(new Configuration(c.n, c.m, c.n - c.j + 1, c.m - c.i + 1));
+		return list;
 	}
-	
+
 	private void storeResult(int r, Configuration c) {
 		values[c.m][c.n][c.i][c.j] = r;
 	}
 
-	public ArrayList<Configuration> successeurs(Configuration c) {
+	private ArrayList<Configuration> successeurs(Configuration c) {
 		ArrayList<Configuration> result = new ArrayList<Configuration>();
 		for (int i = 1; i < c.getM(); ++i)
 			if (i < c.getI())
